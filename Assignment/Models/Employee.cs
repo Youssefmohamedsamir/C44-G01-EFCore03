@@ -20,7 +20,7 @@ namespace Assignment.Models
 
         public char Gender { get; set; }
 
-        public int Position { get; set; }
+        public string? Position { get; set; }
 
 
 

@@ -69,6 +69,41 @@ namespace Assignment.DataContext
                 .HasForeignKey<Crew>(ac => ac.AirCraftId)
                 .IsRequired();
 
+            modelBuilder.Entity<Employee>().HasData(
+
+                new Employee()
+                {
+                    Id = 1,
+                    Name = "Youssef Mohamed",
+                    Position = "Pilot",
+                    AirEmpId = 10,
+                   
+                },
+                new Employee()
+                {
+                    Id = 2,
+                    Name = "Ahme Bihbity",
+                    Position = "breaker",
+                    AirEmpId = 20
+                }
+                  ,
+                new Employee()
+                {
+                    Id = 3,
+                    Name = "Torky",
+                    Position = "Programmer",
+                    AirEmpId = 30,
+                    
+                }
+                );
+
+            modelBuilder.Entity<Airline>().HasData(
+                new Airline() { AirlineId = 10, Name = "EgyptAir", Phones = 01124594540},
+                new Airline() { AirlineId = 20, Name = "EgyptAir", Phones = 01124594540 },
+                new Airline() { AirlineId = 30, Name = "EgyptAir", Phones = 01124594540 },
+                new Airline() { AirlineId = 40, Name = "EgyptAir", Phones = 01124594540 }
+                );
+
         }
 
 
