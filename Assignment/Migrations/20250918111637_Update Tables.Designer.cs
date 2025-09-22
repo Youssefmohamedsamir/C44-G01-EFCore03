@@ -4,6 +4,7 @@ using Assignment.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment.Migrations
 {
     [DbContext(typeof(BaseContext))]
-    partial class BaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250918111637_Update Tables")]
+    partial class UpdateTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,50 +130,6 @@ namespace Assignment.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Assignment.Models.Bus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Speed")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("buses");
-                });
-
-            modelBuilder.Entity("Assignment.Models.Car", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfDoor")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Speed")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("cars");
-                });
-
             modelBuilder.Entity("Assignment.Models.Crew", b =>
                 {
                     b.Property<int>("AirCraftId")
@@ -264,34 +223,6 @@ namespace Assignment.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Assignment.Models.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CashPayment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreditPayment")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("payments");
-
-                    b.HasDiscriminator<string>("CreditPayment").HasValue("Payment");
-
-                    b.UseTphMappingStrategy();
-                });
-
             modelBuilder.Entity("Assignment.Models.Route", b =>
                 {
                     b.Property<int>("Id")
@@ -347,26 +278,6 @@ namespace Assignment.Migrations
                     b.HasIndex("AirlineId1");
 
                     b.ToTable("Transaction");
-                });
-
-            modelBuilder.Entity("Assignment.Models.CashPayment", b =>
-                {
-                    b.HasBaseType("Assignment.Models.Payment");
-
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("CashPayment");
-                });
-
-            modelBuilder.Entity("Assignment.Models.CreditCardPayment", b =>
-                {
-                    b.HasBaseType("Assignment.Models.Payment");
-
-                    b.Property<int>("CardNumber")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("CreditCardPayment");
                 });
 
             modelBuilder.Entity("Assignment.Models.AirCraft", b =>

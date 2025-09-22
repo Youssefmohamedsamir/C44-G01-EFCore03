@@ -19,7 +19,7 @@ namespace Assignment.DataContext
         {
             optionsBuilder.UseSqlServer("Server=.;Database=EFCore02;Trusted_Connection=true;TrustServerCertificate = true");
         }
-
+       
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,7 +39,8 @@ namespace Assignment.DataContext
                 .HasOne(T => T.AirNav)
                 .WithMany()
                 .IsRequired()
-                .HasForeignKey(A => A.AirlineId);
+                .HasForeignKey(A => A.AirlineId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<AirCraftRoute>()
                 .HasOne(acr => acr.AirCraftRoutNav)
@@ -56,6 +57,9 @@ namespace Assignment.DataContext
                 .WithMany(R => R.AirCraftRoutes02)
                 .HasForeignKey(R => R.RouteId);
 
+
+
+
     modelBuilder.Entity<Crew>()
                 .HasKey(c => new
                 {
@@ -67,7 +71,8 @@ namespace Assignment.DataContext
                 .HasOne(c => c.AirCraftNav02)
                 .WithOne(ac => ac.CrewNav)
                 .HasForeignKey<Crew>(ac => ac.AirCraftId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Employee>().HasData(
 
@@ -104,9 +109,18 @@ namespace Assignment.DataContext
                 new Airline() { AirlineId = 40, Name = "EgyptAir", Phones = 01124594540 }
                 );
 
+            modelBuilder.Entity<CashPayment>().HasBaseType(typeof(Payment))
+                .HasDiscriminator<string>("CashPayment");
+
+            modelBuilder.Entity<CreditCardPayment>().HasBaseType(typeof(Payment))
+                .HasDiscriminator<string>("CreditPayment");
+
         }
 
+        public DbSet<Car> cars { get; set; }
+        public DbSet<Bus> buses { get; set; }
 
-       
+        public DbSet<Payment> payments { get; set; }
+
     }
 }
